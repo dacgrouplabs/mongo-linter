@@ -1,0 +1,3 @@
+{
+    "databaseUrl" : "username:password@serverip:port/database"
+}

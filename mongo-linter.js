@@ -2,7 +2,8 @@
 // npm install jshint
 
 // mongo-linter.js
-var databaseUrl = "username:password@serverip:port/database"
+var config = require('./config.json')
+var databaseUrl = config.databaseUrl;
 var collections = ["users", "system.js"]
 console.log("Connecting...");
 var db = require("mongojs").connect(databaseUrl, collections);
