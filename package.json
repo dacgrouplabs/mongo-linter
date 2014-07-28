@@ -1,0 +1,41 @@
+{
+  "name": "mongo-linter",
+  "description": "Tool that connects to your mongodb database and runs jshint on all stored JavaScript.",
+  "keywords": [
+    "mongo",
+    "db",
+    "mongodb",
+    "jslint",
+    "jshint"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dacgrouplabs/mongo-linter.git"
+  },
+  "author": {
+    "name": "David Au",
+    "email": "dau@dacgroup.com"
+  },
+  "contributors": [
+    {
+      "name": "Alex Bevilacqua",
+      "email": "abevilacqua@dacgroup.com"
+    },
+    {
+      "name": "Asha Shi",
+      "email": "ashi@dacgroup.com"
+    }
+  ],
+  "dependencies": {
+    "mongojs": "~0.11.1",
+    "jshint": "~2.5.0"
+  },
+  "readme": "# mongo-linter\n\nA tool written in [node.js](http://nodejs.org) that connects to your [mongodb](http://www.mongodb.org) database and runs jshint on all stored JavaScript.",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/dacgrouplabs/mongo-linter/issues"
+  },
+  "homepage": "https://github.com/dacgrouplabs/mongo-linter",
+  "_id": "mongo-linter@0.0.1"
+}
