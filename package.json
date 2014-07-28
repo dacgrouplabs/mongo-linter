@@ -37,5 +37,6 @@
     "url": "https://github.com/dacgrouplabs/mongo-linter/issues"
   },
   "homepage": "https://github.com/dacgrouplabs/mongo-linter",
-  "_id": "mongo-linter@0.0.1"
+  "_id": "mongo-linter@0.0.1",
+  "private": true
 }
