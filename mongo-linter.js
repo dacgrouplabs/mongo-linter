@@ -1,69 +1,79 @@
 // mongo-linter.js
-var config = require('./config.json');
-var jshint = require("jshint").JSHINT;
-var mongojs = require("mongojs");
+var config = require('./config.json'),
+    Db = require('mongodb').Db,
+    MongoClient = require('mongodb').MongoClient,
+    Server = require('mongodb').Server,
+    ReplSetServers = require('mongodb').ReplSetServers,
+    ObjectID = require('mongodb').ObjectID,
+    Binary = require('mongodb').Binary,
+    GridStore = require('mongodb').GridStore,
+    Grid = require('mongodb').Grid,
+    Code = require('mongodb').Code,
+    BSON = require('mongodb').pure().BSON,
+    assert = require('assert'),
+    linter = require("eslint").linter;
 
-var databaseUrl = config.databaseUrl;
-var collections = ["users", "system.js"];
-console.log("Connecting...");
-var db = mongojs.connect(databaseUrl, collections);
-var totalErrors = 0;
-var suppressedErrors = 0;
+console.log("trying to connect...");
+var mongoclient = MongoClient.connect(config.databaseUrl, function(err, db) {
+    if(err) {
+        console.log("error establishing connection.");
+        throw err;
+    } else {
+        console.log("connected.")
+        // get the system.js collection in safe mode
+        db.collection("system.js", {strict:true}, function(err, storedjsCollection) {
+            if(err) {
+                console.log("system.js collection doesn't exist in this db for some odd reason");
+            } else {
+                console.log("retrieving all documents from system.js collection");
+                storedjsCollection.find({}, {sort: {"_id": 1}}).toArray(function(err, docs) {
+                    if(err) {
+                        console.log("error retrieving stored javascript from system.js collection...");
+                        throw err;
+                    } else {
+                        console.log("documents returned: " + docs.length);
+                        console.log("start linting...");
+                        console.log();
 
-db.system.js.find({ }, { } , { /*limit: 10*/}, function(err, storedjsArray) {
-  if( !storedjsArray) console.log("No stored JavaScript functions found");
-  else if (err) console.log(err);
-  else {
-//    console.log(storedjsArray.value.code);
+                        var documentsWithIssues = 0;
+                        var totalIssues = 0;
 
-      storedjsArray.forEach( function(storedjs) {
-        //console.log(storedjs.value.code);
-        var options = {
-            "eqeqeq" : false,
-            "eqnull" : false,
-            "laxbreak" : true,
-            "sub" : true
-        };
+                        docs.forEach(function(doc) {
+                            
+                            var messages = linter.verify("var " + doc._id + " = " + doc.value.code, {});
+                            
+                            if (messages.length > 0) {
+                                console.log(doc._id + " : " + messages.length + " issues");
+                                console.log("");
+                                console.log("================================================================================");
+                                console.log("");
+                                console.log(doc.value.code);
+                                console.log("");
+                                console.log("================================================================================");
+                                console.log(messages);
 
-        var globals = {};
+                                documentsWithIssues++;
+                                totalIssues = totalIssues + messages.length;
+                            } else {
+                                console.log(doc._id + " : OK");
+                            }
 
-        if(jshint(storedjs.value.code.toString(), options, globals)) {
-            console.log('Function ' + storedjs._id + ' has no errors.  Congrats!');
-        } else {
-            var out = jshint.data(),
-                errors = out.errors;
-            console.log(errors.length + ' errors in function ' + storedjs._id);
-            console.log('');
+                        });
 
-            for(var j=0;j<errors.length;j++) {
-                if (errors[j].code.substring(0, 1)=='W') {
-                // if (errors[j].code=='W025' ||
-                    // errors[j].code=='W041') {
+                        console.log("");
+                        console.log("finished linting.");
 
-                    suppressedErrors++;
-                }
-                else {
-                    console.log(errors[j].line + ':' + errors[j].character + ' (' + errors[j].code + ') -> ' + errors[j].reason + ' -> ' + errors[j].evidence);
-                }
+                        if(documentsWithIssues == 0) {
+                            console.log("no issues found. congrats!");
+                        } else {
+                            console.log("found " + totalIssues + " issues in " + documentsWithIssues + " documents. :(");
+                        }
 
-                totalErrors++;
+                        db.close();
+                        console.log("goodbye.");
+                    }
+                });
             }
-
-            // List globals
-            console.log('');
-            console.log('Globals: ');
-            for(j=0;j<out.globals.length;j++) {
-                console.log('    ' + out.globals[j]);
-            }
-        }
-        console.log('-----------------------------------------');
-      } );
-
-      console.log('Total errors: ' + totalErrors);
-      console.log('Suppressed errors: ' + suppressedErrors);
-      console.log('Remaining errors: ' + (totalErrors - suppressedErrors));
-  }
-
-  db.close();
-  process.exit();
+        });
+    }
 });
