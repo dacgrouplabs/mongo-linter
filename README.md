@@ -65,11 +65,7 @@ PS C:\dev\mongo-linter>
 
 ## Testing
 
-To run the test suite, first you'll need to ensure you have [mocha](https://github.com/mochajs/mocha) installed.
-
-`npm install -g mocha`
-
-Once installed, start the test runner via `mocha`:
+The test suite can be run using [mocha](https://github.com/mochajs/mocha).
 
 ```
 $ mocha
