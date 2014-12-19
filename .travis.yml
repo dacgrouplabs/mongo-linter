@@ -2,3 +2,5 @@ language: node_js
 node_js:
   - "0.11"
   - "0.10"
+before_install:
+  - "curl -L https://gist.githubusercontent.com/alexbevi/aec10faff44b698cd419/raw/99b8d9d14f73fafb655e69d6d19acf707964756a/mongo-linter.config.json > config.json"
