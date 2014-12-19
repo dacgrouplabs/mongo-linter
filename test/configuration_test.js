@@ -9,7 +9,7 @@ describe('Configuration', function(){
     });
 
     it('should match the format of username:password@serverip:port/database', function() {
-      expect(config.databaseUrl).to.match(/([\w]+):([\w]+)@([\.\w]+):(\d+)\/([\w]+)$/);
+      expect(config.databaseUrl).to.match(/([\.\-\w]+):([\.\-\w]+)@([\.\-\w]+):(\d+)\/([\.\-\w]+)/);
     });
   })
 })
