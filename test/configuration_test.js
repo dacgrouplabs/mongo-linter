@@ -8,8 +8,8 @@ describe('Configuration', function(){
       expect(config.databaseUrl).not.to.be(undefined);
     });
 
-    it('should match the format of username:password@serverip:port/database', function() {
-      expect(config.databaseUrl).to.match(/([\.\-\w]+):([\.\-\w]+)@([\.\-\w]+):(\d+)\/([\.\-\w]+)/);
+    it('should match the format of mongodb://username:password@serverip:port/database', function() {
+      expect(config.databaseUrl).to.match(/^mongodb:\/\/([\.\-\w]+):([\.\-\w]+)@([\.\-\w]+):(\d+)\/([\.\-\w]+)/);
     });
   })
 })
