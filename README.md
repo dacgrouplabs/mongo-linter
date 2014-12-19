@@ -33,14 +33,27 @@ The connection string should follow the format described in [the mongo connectio
 
 ### ESLint Rules Configuration
 
-Copy the provided `rules.json.sample` to `rules.json` and updated the *rules* entry with the rules you'd like applied to your Javascript functions.
+Copy the provided `rules.json.sample` to `rules.json` and update the *rules* entry with the rules you'd like applied to your Javascript functions.
+
+For example:
+
+``` json
+{
+  "rules": {
+    "eqeqeq": 0,
+    "no-bitwise": 1,
+    "curly": [2, "multi"],
+    "quotes": [2, "double"]
+  }
+}
+```
 
 Since [ESLint](http://eslint.org) is being used as the internal linter, please refer to the [ESLint Rules](http://eslint.org/docs/rules) page for all available options.
 
 ### Run mongo-linter
 
 ```
-node .\mongo-linter.js
+node mongo-linter.js
 ```
 
 Output example:
@@ -99,8 +112,16 @@ $ mocha
 
 ## License
 
-`mongo-linter`'s code in this repo uses the MIT license, see our LICENSE file.
+see [LICENSE](LICENSE).
 
 ## Contributing
 
-Needs work
+Want to contribute? Great!
+
+1. Fork it.
+2. Create a branch (`git checkout -b my_branch`)
+3. Commit your changes (`git commit -am "Added funktastic feature!"`)
+4. Push to the branch (`git push origin my_branch`)
+5. Open a [Pull Request][1]
+
+[1]: https://github.com/dacgrouplabs/mongo-linter/pulls
