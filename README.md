@@ -20,18 +20,15 @@ npm update
 
 
 ### Configure database connection string
+First, copy the provided `config.json.sample` to `config.json` and provide a valid `databaseUrl` value.
 
-First, you will need to configure your connection settings in `config.json`. The contents look like:
-```
+``` json
 {
     "databaseUrl" : "username:password@serverip:port/database"
 }
 ```
-Modify the `databaseUrl` value with your database connection info and credentials. mongo-linter will pass this connection string to the [mongojs](http://mafintosh.github.io/mongojs/) `connect` function like so:
-```javascript
-var db = require("mongojs").connect(databaseUrl, collections);
-```
-The connection string should follow the format described in [the mongo connection string docs](http://docs.mongodb.org/manual/reference/connection-string/).
+
+The connection string should follow the format described in [the mongo connection string docs](http://docs.mongodb.org/manual/reference/connection-string).
 
 ### Run mongo-linter
 
@@ -66,6 +63,25 @@ PS C:\dev\mongo-linter>
 2. Hack away at writing jshint support for mongodb stored js env
 3. Embed mongo-linter into shell or possibly hooked into mongodb system.js.save() event itself
 
+## Testing
+
+To run the test suite, first you'll need to ensure you have [mocha](https://github.com/mochajs/mocha) installed.
+
+`npm install -g mocha`
+
+Once installed, start the test runner via `mocha`:
+
+```
+$ mocha
+
+  Configuration
+    databaseUrl
+      ✓ should contain a databaseUrl key 
+      ✓ should match the format of username:password@serverip:port/database 
+
+
+  2 passing (14ms)
+```
 
 ## License
 
