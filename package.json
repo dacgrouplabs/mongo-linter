@@ -38,5 +38,8 @@
   },
   "homepage": "https://github.com/dacgrouplabs/mongo-linter",
   "_id": "mongo-linter@0.0.1",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  }
 }
