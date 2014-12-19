@@ -1,13 +1,12 @@
 {
   "name": "mongo-linter",
-  "description": "Tool that connects to your mongodb database and runs eslint on all stored JavaScript.",
+  "description": "Tool that connects to your mongodb database and runs eslint on all stored JavaScript functions.",
   "keywords": [
     "mongo",
     "db",
     "mongodb",
-    "jslint",
-    "jshint",
-	"eslint"
+    "linter",
+	  "eslint"
   ],
   "version": "0.0.1",
   "repository": {

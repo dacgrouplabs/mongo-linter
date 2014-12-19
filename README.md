@@ -19,7 +19,8 @@ npm update
 ## Usage
 
 
-### Configure database connection string
+### Database URI configuration
+
 First, copy the provided `config.json.sample` to `config.json` and provide a valid `databaseUrl` value.
 
 ``` json
@@ -29,6 +30,12 @@ First, copy the provided `config.json.sample` to `config.json` and provide a val
 ```
 
 The connection string should follow the format described in [the mongo connection string docs](http://docs.mongodb.org/manual/reference/connection-string).
+
+### ESLint Rules Configuration
+
+Copy the provided `rules.json.sample` to `rules.json` and updated the *rules* entry with the rules you'd like applied to your Javascript functions.
+
+Since [ESLint](http://eslint.org) is being used as the internal linter, please refer to the [ESLint Rules](http://eslint.org/docs/rules) page for all available options.
 
 ### Run mongo-linter
 
