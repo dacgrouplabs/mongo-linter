@@ -1,11 +1,14 @@
 // mongo-linter.js
 var argv = require('minimist')(process.argv.slice(2)),
-    config = require('./config.json'),
     rules  = require('./rules.json') || {},
     MongoClient = require('mongodb').MongoClient,
     linter = require("eslint").linter;
 
-if (argv.url) config.databaseUrl = argv.url;
+var config = {};
+if (argv.url)
+    config.databaseUrl = argv.url;
+else
+    config = require('./config.json');
 
 console.log("trying to connect...");
 MongoClient.connect(config.databaseUrl, function(err, db) {
