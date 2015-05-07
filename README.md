@@ -55,6 +55,10 @@ Since [ESLint](http://eslint.org) is being used as the internal linter, please r
 ```
 node mongo-linter.js
 ```
+or:
+```
+node mongo-linter.js --url=mongodb://username:password@serverip:port/database?options
+```
 
 Output example:
 
