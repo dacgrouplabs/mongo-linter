@@ -29,7 +29,8 @@
   ],
   "dependencies": {
     "eslint": "~0.7.4",
-    "mongodb": "^1.4.9"
+    "mongodb": "^1.4.9",
+	"minimist": "^1.1.1"
   },
   "readme": "# mongo-linter\n\nA tool written in [node.js](http://nodejs.org) that connects to your [mongodb](http://www.mongodb.org) database and runs eslint on all stored JavaScript.",
   "readmeFilename": "README.md",

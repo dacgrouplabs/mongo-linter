@@ -89,7 +89,7 @@ PS C:\dev\mongo-linter>
 
 ## Roadmap
 
-0. Command line support for connection string as argument, fallback to config.json if no argument given
+0. ~~Command line support for connection string as argument, fallback to config.json if no argument given~~ Done
 1. ~~Replace `mongojs` and use [mongodb](https://github.com/mongodb/node-mongodb-native/) native node driver instead~~ Done
 2. ~~Hack away at writing jshint support for mongodb stored js env~~
 3. Embed mongo-linter into shell or possibly hooked into mongodb system.js.save() event itself

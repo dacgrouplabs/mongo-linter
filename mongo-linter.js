@@ -1,8 +1,12 @@
 // mongo-linter.js
-var config = require('./config.json'),
+var argv = require('minimist')(process.argv.slice(2)),
+    config = require('./config.json'),
     rules  = require('./rules.json') || {},
     MongoClient = require('mongodb').MongoClient,
     linter = require("eslint").linter;
+
+
+if (argv.url) config.databaseUrl = argv.url;
 
 console.log("trying to connect...");
 MongoClient.connect(config.databaseUrl, function(err, db) {
@@ -11,12 +15,14 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
         throw err;
     } else {
         console.log("connected.")
-            // get the system.js collection in safe mode
+        // get the system.js collection in safe mode
         db.collection("system.js", {
             strict: true
         }, function(err, storedjsCollection) {
             if (err) {
-                console.log("system.js collection doesn't exist in this db for some odd reason");
+                console.log("could not find system.js collection in this db.");
+				console.log("closing connection.");
+				db.close();
             } else {
                 console.log("retrieving all documents from system.js collection");
                 storedjsCollection.find({}, { sort: { "_id": 1 } }).toArray(function(err, docs) {
@@ -33,19 +39,20 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
                             var messages = linter.verify("var " + doc._id + " = " + doc.value.code, rules);
 
                             if (messages.length > 0) {
-                                console.log(doc._id + " : " + messages.length + " issues");
-                                console.log("");
-                                console.log("================================================================================");
-                                console.log("");
-                                console.log(doc.value.code);
-                                console.log("");
-                                console.log("================================================================================");
-                                console.log(messages);
+                                console.log("\033[31m X \033[0m" + doc._id + " : " + messages.length + " issues");
+								
+								console.log("");
+								console.log("================================================================================");
+								console.log("");
+								console.log(doc.value.code);
+								console.log("");
+								console.log("================================================================================");
+								console.log(messages);
 
                                 documentsWithIssues++;
                                 totalIssues = totalIssues + messages.length;
                             } else {
-                                console.log(doc._id + " : OK");
+                                console.log("\033[32m ✓ \033[0m" + doc._id);
                             }
 
                         });
@@ -54,10 +61,12 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
                         if (documentsWithIssues == 0)
                             console.log(completedMessage, totalIssues);
                         else
-                            console.log(completedMessage + " in %d documents", totalIssues, documentsWithIssues);
+                            console.log(completedMessage + " in %d documents.", totalIssues, documentsWithIssues);
 
-                        db.close();
+						console.log("closing connection.");
+						db.close();
                     }
+					
                 });
             }
         });
