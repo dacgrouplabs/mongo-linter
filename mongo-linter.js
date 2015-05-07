@@ -5,7 +5,6 @@ var argv = require('minimist')(process.argv.slice(2)),
     MongoClient = require('mongodb').MongoClient,
     linter = require("eslint").linter;
 
-
 if (argv.url) config.databaseUrl = argv.url;
 
 console.log("trying to connect...");
@@ -21,8 +20,8 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
         }, function(err, storedjsCollection) {
             if (err) {
                 console.log("could not find system.js collection in this db.");
-				console.log("closing connection.");
-				db.close();
+                console.log("closing connection.");
+                db.close();
             } else {
                 console.log("retrieving all documents from system.js collection");
                 storedjsCollection.find({}, { sort: { "_id": 1 } }).toArray(function(err, docs) {
@@ -40,21 +39,16 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
 
                             if (messages.length > 0) {
                                 console.log("\033[31m X \033[0m" + doc._id + " : " + messages.length + " issues");
-								
-								console.log("");
-								console.log("================================================================================");
-								console.log("");
-								console.log(doc.value.code);
-								console.log("");
-								console.log("================================================================================");
-								console.log(messages);
+                                console.log("\n================================================================================\n");
+                                console.log(doc.value.code);
+                                console.log("\n================================================================================\n");
+                                console.log(messages);
 
                                 documentsWithIssues++;
                                 totalIssues = totalIssues + messages.length;
                             } else {
                                 console.log("\033[32m ✓ \033[0m" + doc._id);
                             }
-
                         });
 
                         var completedMessage = "linting completed with %d issue(s)"
@@ -63,10 +57,9 @@ MongoClient.connect(config.databaseUrl, function(err, db) {
                         else
                             console.log(completedMessage + " in %d documents.", totalIssues, documentsWithIssues);
 
-						console.log("closing connection.");
-						db.close();
+                        console.log("closing connection.");
+                        db.close();
                     }
-					
                 });
             }
         });
