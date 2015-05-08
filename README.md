@@ -2,7 +2,14 @@
 
 [![Build Status](https://magnum.travis-ci.com/dacgrouplabs/mongo-linter.svg?token=vja1SanqcFPypny4gPcZ&branch=master)](https://magnum.travis-ci.com/dacgrouplabs/mongo-linter)
 
-Tool that connects to your [mongodb](https://www.mongodb.org/) database and runs [eslint](https://github.com/eslint/eslint) on all stored JavaScript functions. Helps developers detect potential issues and avoid head-scratching trying to figure out which stored js function is causing db.loadServerScripts() to fail -- mongo shell error messages do not tell you which function is the culprit.
+Tool that connects to your [mongodb](https://www.mongodb.org/) database and runs [eslint](https://github.com/eslint/eslint) on all stored JavaScript functions. Helps developers detect potential issues and avoid head-scratching trying to figure out which stored js function is causing db.loadServerScripts() to fail -- mongo shell error messages do not tell you which function is the culprit. For example:
+
+```
+> db.loadServerScripts();
+2015-05-08T14:59:28.094+0000 SyntaxError: Unexpected token ;
+2015-05-08T14:59:28.099+0000 Error: 16722 SyntaxError: Unexpected token ; at src/mongo/shell/db.js:895
+>
+```
 
 ## Installation
 
