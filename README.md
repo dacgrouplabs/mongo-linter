@@ -1,6 +1,6 @@
 # mongo-linter
 
-[![Build Status](https://magnum.travis-ci.com/dacgrouplabs/mongo-linter.svg?token=vja1SanqcFPypny4gPcZ&branch=master)](https://magnum.travis-ci.com/dacgrouplabs/mongo-linter)
+[![Build Status](https://travis-ci.org/dacgrouplabs/mongo-linter.svg?branch=devel)](https://travis-ci.org/dacgrouplabs/mongo-linter)
 
 Tool that connects to your [mongodb](https://www.mongodb.org/) database and runs [eslint](https://github.com/eslint/eslint) on all stored JavaScript functions. Helps developers detect potential issues and avoid head-scratching trying to figure out which stored js function is causing db.loadServerScripts() to fail -- mongo shell error messages do not tell you which function is the culprit. For example:
 
